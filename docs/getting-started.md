@@ -1,6 +1,6 @@
 # Getting started
 
-`react-native-local-ai` lets a React Native app install, load, stream, and benchmark local
+`react-native-edge-slm` lets a React Native app install, load, stream, and benchmark local
 GGUF models on-device. Android-first, llama.cpp-first.
 
 > **Release stage.** The public API (types + `RuntimeBackend` seam) is defined and importable
@@ -11,8 +11,8 @@ GGUF models on-device. Android-first, llama.cpp-first.
 ## Install
 
 ```sh
-npm install react-native-local-ai llama.rn
-# or: yarn add react-native-local-ai llama.rn
+npm install react-native-edge-slm llama.rn
+# or: yarn add react-native-edge-slm llama.rn
 ```
 
 `llama.rn` provides the llama.cpp engine.
@@ -24,7 +24,7 @@ npm install react-native-local-ai llama.rn
 ## The flow
 
 ```ts
-import { LocalAI } from 'react-native-local-ai';
+import { LocalAI } from 'react-native-edge-slm';
 
 // 1. Register a preset (describe the model once).
 LocalAI.registerPreset({
@@ -79,7 +79,7 @@ console.log(bench.loadMs, bench.firstTokenMs, bench.tokensPerSecond);
 Every failure is a `LocalAIError` (or subclass) with a stable `code`:
 
 ```ts
-import { LocalAIError, ChecksumMismatchError } from 'react-native-local-ai';
+import { LocalAIError, ChecksumMismatchError } from 'react-native-edge-slm';
 
 try {
   await LocalAI.installPreset('qwen2.5-1.5b-instruct-q4');

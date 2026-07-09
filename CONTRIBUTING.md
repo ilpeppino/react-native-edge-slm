@@ -1,4 +1,4 @@
-# Contributing to react-native-local-ai
+# Contributing to react-native-edge-slm
 
 Thanks for your interest! This is a generic, open-source on-device AI runtime for React
 Native. Contributions of all kinds are welcome — bug reports, docs, tests, and code.
@@ -18,14 +18,14 @@ Native. Contributions of all kinds are welcome — bug reports, docs, tests, and
 Requires Node 18+.
 
 ```sh
-git clone https://github.com/ilpeppino/react-native-local-ai.git
-cd react-native-local-ai
+git clone https://github.com/ilpeppino/react-native-edge-slm.git
+cd react-native-edge-slm
 npm install
 ```
 
 This is an npm-workspaces monorepo:
 
-- `packages/react-native-local-ai` — the library (TypeScript + Android Kotlin + iOS Swift).
+- `packages/react-native-edge-slm` — the library (TypeScript + Android Kotlin + iOS Swift).
 - `apps/example` — the example app / usage demo.
 
 ## Everyday commands

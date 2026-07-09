@@ -13,7 +13,7 @@ The reserved `cpp/` folder is for a possible future self-hosted backend.
 Install both packages:
 
 ```sh
-npm install react-native-local-ai llama.rn
+npm install react-native-edge-slm llama.rn
 ```
 
 Autolinking wires up the native modules. Requirements:

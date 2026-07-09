@@ -1,5 +1,5 @@
 /**
- * react-native-local-ai — public entry point.
+ * react-native-edge-slm — public entry point.
  *
  * Generic on-device AI runtime for React Native: install, load, stream, benchmark and manage
  * local GGUF models. Android-first, llama.cpp-first. Ships no models and hardcodes no model URLs.

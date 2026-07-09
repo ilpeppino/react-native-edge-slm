@@ -1,9 +1,9 @@
 /**
- * react-native-local-ai — example app.
+ * react-native-edge-slm — example app.
  *
  * Drives the full MVP on-device: register a preset → configure a (developer-provided) model
  * URL → install → load → stream tokens → cancel → unload → benchmark. Drop this component into
- * a React Native app that has `react-native-local-ai` and `llama.rn` installed.
+ * a React Native app that has `react-native-edge-slm` and `llama.rn` installed.
  *
  * Replace MODEL_URL with a small instruct GGUF you have the rights to use.
  */
@@ -22,7 +22,7 @@ import {
   LocalAI,
   type BenchmarkResult,
   type Runtime,
-} from 'react-native-local-ai';
+} from 'react-native-edge-slm';
 
 const PRESET_ID = 'demo-model';
 const MODEL_URL = 'https://example.com/models/your-model-q4_k_m.gguf';
@@ -114,7 +114,7 @@ export default function App(): React.JSX.Element {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>react-native-local-ai</Text>
+      <Text style={styles.title}>react-native-edge-slm</Text>
 
       <Text style={styles.label}>Model URL (a GGUF you provide)</Text>
       <TextInput style={styles.input} value={modelUrl} onChangeText={setModelUrl} autoCapitalize="none" />

@@ -1,5 +1,5 @@
 /**
- * Typed error taxonomy for react-native-local-ai.
+ * Typed error taxonomy for react-native-edge-slm.
  *
  * Every error carries a stable, machine-readable {@link LocalAIErrorCode} so callers can
  * branch on failure kind without string-matching messages. Codes are namespaced `LOCALAI.*`.

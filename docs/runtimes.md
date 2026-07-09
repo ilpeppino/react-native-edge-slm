@@ -30,7 +30,7 @@ then loads through it — no fork required. This is how a proprietary app can pl
 (see [private-app-integration.md](./private-app-integration.md)).
 
 ```ts
-import { LocalAI, type RuntimeBackend } from 'react-native-local-ai';
+import { LocalAI, type RuntimeBackend } from 'react-native-edge-slm';
 
 const myBackend: RuntimeBackend = {
   key: 'my-engine',

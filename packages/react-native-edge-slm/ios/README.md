@@ -12,7 +12,7 @@ on iOS:
 - **`LocalAiDevice`** (`LocalAiDevice.swift` + `.m`) — RAM / CPU-core / free-storage / hardware
   identifier reporting.
 
-Linked via `react-native-local-ai.podspec` (`pod install`). Requires **iOS 13+** (CryptoKit).
+Linked via `react-native-edge-slm.podspec` (`pod install`). Requires **iOS 13+** (CryptoKit).
 
 The llama.cpp inference itself is provided by `llama.rn`'s own iOS build, wrapped behind this
 package's `RuntimeBackend` seam — no engine code is vendored here.

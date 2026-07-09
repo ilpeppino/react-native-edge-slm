@@ -171,7 +171,7 @@ export function createReactNativeEnvironment(): LocalAIEnvironment {
   if (!fileStoreNative || !deviceNative) {
     throw new LocalAIError(
       'LOCALAI.RUNTIME_UNAVAILABLE',
-      'react-native-local-ai native modules are not linked. Rebuild the app after installing.'
+      'react-native-edge-slm native modules are not linked. Rebuild the app after installing.'
     );
   }
   return {

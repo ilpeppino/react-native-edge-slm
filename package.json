@@ -1,18 +1,18 @@
 {
-  "name": "react-native-local-ai-monorepo",
+  "name": "react-native-edge-slm-monorepo",
   "private": true,
   "version": "0.0.0",
-  "description": "Monorepo for react-native-local-ai — a generic on-device AI runtime for React Native.",
+  "description": "Monorepo for react-native-edge-slm — a generic on-device AI runtime for React Native.",
   "license": "MIT",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace packages/react-native-local-ai",
-    "typecheck": "npm run typecheck --workspace packages/react-native-local-ai",
+    "build": "npm run build --workspace packages/react-native-edge-slm",
+    "typecheck": "npm run typecheck --workspace packages/react-native-edge-slm",
     "lint:no-private-assets": "bash scripts/check-no-private-assets.sh",
-    "test": "npm run test --workspace packages/react-native-local-ai --if-present"
+    "test": "npm run test --workspace packages/react-native-edge-slm --if-present"
   },
   "engines": {
     "node": ">=18"
