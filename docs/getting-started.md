@@ -63,7 +63,8 @@ const { text, stats } = await runtime.generate({
 });
 console.log(stats.tokensPerSecond, 'tok/s');
 
-// ...or async-iterate for streamed chunks (breaking the loop cancels the generation):
+// ...or async-iterate for streamed chunks (breaking the loop cancels the generation).
+// NOTE: `for await` needs async-iterator support — see the Hermes caveat below before using it.
 for await (const { text } of runtime.generate({ prompt: 'Write a haiku.' })) {
   process.stdout.write(text);
 }
@@ -82,6 +83,20 @@ console.log(bench.loadMs, bench.firstTokenMs, bench.tokensPerSecond);
 const installed = await LocalAI.getInstalledModels();
 await LocalAI.updatePreset('qwen2.5-1.5b-instruct-q4'); // re-download if the source changed
 ```
+
+> ⚠️ **Hermes and `for await`.** The async-iteration style needs async-iterator support.
+> **Hermes** — React Native's default JS engine on Android (and on iOS when enabled) — does **not**
+> provide it, and the React Native Babel preset does **not** transpile `for await` down, so the
+> loop can fail at runtime. Options:
+>
+> - **Use `onToken`** (shown above) — works on every engine, no setup. Recommended for most apps.
+> - **Enable a transform + polyfill** if you want `for await`: add
+>   `@babel/plugin-transform-async-generator-functions` to `babel.config.js` and a
+>   `Symbol.asyncIterator` polyfill at app startup.
+> - **Disable Hermes** (use JSC), which supports async iteration natively.
+>
+> Outside React Native (Node, V8, JSC) `for await` works as-is. Both styles observe the same
+> single generation, so `onToken` is a drop-in when async iteration isn't available.
 
 > `EdgeSLM` is an alias for `LocalAI` — `import { EdgeSLM } from 'react-native-edge-slm'` if you
 > prefer that name; the API is identical.
