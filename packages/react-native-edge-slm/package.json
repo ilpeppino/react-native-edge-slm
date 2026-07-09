@@ -1,6 +1,6 @@
 {
   "name": "react-native-edge-slm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generic on-device AI runtime for React Native: install, load, stream, benchmark and manage local GGUF models (Android-first, llama.cpp-first).",
   "keywords": [
     "react-native",
