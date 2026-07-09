@@ -148,4 +148,41 @@ describe('LocalAI facade lifecycle', () => {
   it('reports device capabilities from the environment', async () => {
     expect(await localAI.getDeviceCapabilities()).toEqual(caps);
   });
+
+  it('getInstalledModels lists installed models', async () => {
+    registerPreset();
+    expect(await localAI.getInstalledModels()).toEqual([]);
+    await localAI.installPreset('m1');
+    const models = await localAI.getInstalledModels();
+    expect(models.map((m) => m.presetId)).toEqual(['m1']);
+    expect(models[0]?.sha256).toBe(BODY_SHA);
+  });
+
+  it('updatePreset is a no-op when the pinned checksum already matches', async () => {
+    registerPreset(); // source pins BODY_SHA
+    await localAI.installPreset('m1');
+    const before = server.requestCount();
+    const updated = await localAI.updatePreset('m1');
+    expect(updated.sha256).toBe(BODY_SHA);
+    expect(server.requestCount()).toBe(before); // nothing re-downloaded
+  });
+
+  it('updatePreset re-downloads when the install has no pinned checksum', async () => {
+    localAI.registerPreset({
+      id: 'm1',
+      displayName: 'Test Model',
+      runtime: 'llama.cpp',
+      fileName: 'model.gguf',
+    });
+    localAI.configurePresetSource('m1', {
+      type: 'url',
+      url: server.url,
+      allowInsecureHttp: true,
+    });
+    await localAI.installPreset('m1');
+    const before = server.requestCount();
+    const updated = await localAI.updatePreset('m1');
+    expect(updated.presetId).toBe('m1');
+    expect(server.requestCount()).toBeGreaterThan(before); // re-downloaded
+  });
 });

@@ -6,6 +6,20 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- **Streaming via async iteration** — `Runtime.generate()` now returns a `GenerationHandle` that
+  is both awaitable (`await runtime.generate(...)` → `GenerateResult`, unchanged) **and**
+  async-iterable (`for await (const { text } of runtime.generate(...))`). Breaking out of the
+  loop early cancels the in-flight generation. The `onToken` callback keeps working alongside
+  either style. New `TokenChunk` / `GenerationHandle` types are exported. Non-breaking.
+- **`LocalAI.getInstalledModels()`** — returns every installed model recorded in the registry
+  (self-healed for missing files).
+- **`LocalAI.updatePreset(id, options?)`** — (re)installs a model from its configured source to
+  pick up a newer file; a no-op when the source pins a `sha256` that matches the installed file.
+- **`EdgeSLM`** — brand alias export for the `LocalAI` singleton (`import { EdgeSLM } from
+  'react-native-edge-slm'`).
+
 ## [0.1.0] - 2026-07-09
 
 First public release. Android-first, llama.cpp-first.

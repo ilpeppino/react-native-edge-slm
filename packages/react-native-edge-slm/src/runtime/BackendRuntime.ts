@@ -14,10 +14,11 @@ import { GenerationBusyError, LocalAIError } from '../errors';
 import type { GenerationConfig } from '../types/presets';
 import type {
   GenerateOptions,
-  GenerateResult,
+  GenerationHandle,
   Runtime,
   RuntimeBackendContext,
 } from '../types/runtime';
+import { BackendGenerationHandle } from './GenerationHandle';
 import { mergeGenerationConfig } from './mergeConfig';
 
 export class BackendRuntime implements Runtime {
@@ -31,28 +32,46 @@ export class BackendRuntime implements Runtime {
     private readonly defaultConfig?: GenerationConfig
   ) {}
 
-  async generate(options: GenerateOptions): Promise<GenerateResult> {
+  generate(options: GenerateOptions): GenerationHandle {
+    // Error cases surface as a rejected handle (not a synchronous throw) so callers can uniformly
+    // `await` / `for await` / `.catch` the return value. The busy check stays synchronous so two
+    // rapid calls can't both start.
     if (this.released) {
-      throw new LocalAIError('LOCALAI.RUNTIME_UNAVAILABLE', 'Runtime has been unloaded.');
+      return new BackendGenerationHandle(
+        () => Promise.reject(new LocalAIError('LOCALAI.RUNTIME_UNAVAILABLE', 'Runtime has been unloaded.')),
+        () => undefined
+      );
     }
     if (this.busy) {
-      throw new GenerationBusyError();
+      return new BackendGenerationHandle(() => Promise.reject(new GenerationBusyError()), () => undefined);
     }
     this.busy = true;
     this.cancelledInFlight = false;
-    try {
-      const config = mergeGenerationConfig(this.defaultConfig, options.config);
-      const result = await this.context.generate({ ...options, config });
-      if (this.cancelledInFlight) {
-        return {
-          text: result.text,
-          stats: { ...result.stats, cancelled: true, finishReason: 'cancelled' },
-        };
-      }
-      return result;
-    } finally {
-      this.busy = false;
-    }
+    const config = mergeGenerationConfig(this.defaultConfig, options.config);
+    return new BackendGenerationHandle(
+      (push) =>
+        this.context
+          .generate({
+            ...options,
+            config,
+            onToken: (token) => {
+              options.onToken?.(token);
+              push(token);
+            },
+          })
+          .then((result) =>
+            this.cancelledInFlight
+              ? {
+                  text: result.text,
+                  stats: { ...result.stats, cancelled: true, finishReason: 'cancelled' as const },
+                }
+              : result
+          )
+          .finally(() => {
+            this.busy = false;
+          }),
+      () => this.cancel()
+    );
   }
 
   cancel(): void {

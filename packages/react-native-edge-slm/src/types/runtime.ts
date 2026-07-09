@@ -38,6 +38,36 @@ export interface GenerateResult {
   stats: GenerationStats;
 }
 
+/** A single streamed chunk yielded when iterating a {@link GenerationHandle}. */
+export interface TokenChunk {
+  /** The text of this token/chunk. */
+  text: string;
+}
+
+/**
+ * The value returned by {@link Runtime.generate}. It is **both**:
+ *
+ *  - a `Promise<GenerateResult>` — `await runtime.generate(...)` resolves to the full result;
+ *  - an `AsyncIterable<TokenChunk>` — `for await (const { text } of runtime.generate(...))`
+ *    yields tokens as they stream.
+ *
+ * Both styles observe the same single generation. Breaking out of a `for await` loop early
+ * (via `break`/`return`) automatically cancels the in-flight generation. The `onToken` callback
+ * on {@link GenerateOptions} continues to work alongside either style.
+ */
+export interface GenerationHandle extends PromiseLike<GenerateResult>, AsyncIterable<TokenChunk> {
+  then<TResult1 = GenerateResult, TResult2 = never>(
+    onfulfilled?: ((value: GenerateResult) => TResult1 | PromiseLike<TResult1>) | null,
+    onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null
+  ): Promise<TResult1 | TResult2>;
+  catch<TResult = never>(
+    onrejected?: ((reason: unknown) => TResult | PromiseLike<TResult>) | null
+  ): Promise<GenerateResult | TResult>;
+  finally(onfinally?: (() => void) | null): Promise<GenerateResult>;
+  /** Cancel this generation if it is still in flight. Equivalent to {@link Runtime.cancel}. */
+  cancel(): void;
+}
+
 /**
  * A loaded, ready-to-use model. Returned by `LocalAI.loadPreset`.
  *
@@ -46,7 +76,11 @@ export interface GenerateResult {
  */
 export interface Runtime {
   readonly presetId: string;
-  generate(options: GenerateOptions): Promise<GenerateResult>;
+  /**
+   * Start a generation. The returned {@link GenerationHandle} can be awaited for the full
+   * {@link GenerateResult} or async-iterated for streamed {@link TokenChunk}s.
+   */
+  generate(options: GenerateOptions): GenerationHandle;
   /** Request cancellation of the in-flight generation, if any. Safe to call when idle. */
   cancel(): void;
   /** Release the underlying backend context and free memory. Idempotent. */

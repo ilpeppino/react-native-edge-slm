@@ -56,12 +56,17 @@ await LocalAI.installPreset('qwen2.5-1.5b-instruct-q4', {
 // 5. Load into the runtime.
 const runtime = await LocalAI.loadPreset('qwen2.5-1.5b-instruct-q4');
 
-// 6. Stream tokens.
+// 6. Stream tokens. `generate()` returns a handle you can await for the full result...
 const { text, stats } = await runtime.generate({
   prompt: 'Explain on-device AI in one sentence.',
   onToken: (t) => console.log(t),
 });
 console.log(stats.tokensPerSecond, 'tok/s');
+
+// ...or async-iterate for streamed chunks (breaking the loop cancels the generation):
+for await (const { text } of runtime.generate({ prompt: 'Write a haiku.' })) {
+  process.stdout.write(text);
+}
 
 // 7. Cancel a long generation at any time.
 runtime.cancel();
@@ -72,7 +77,14 @@ await runtime.unload();
 // 9. Benchmark a device/model pairing.
 const bench = await LocalAI.benchmark('qwen2.5-1.5b-instruct-q4');
 console.log(bench.loadMs, bench.firstTokenMs, bench.tokensPerSecond);
+
+// Manage installed models.
+const installed = await LocalAI.getInstalledModels();
+await LocalAI.updatePreset('qwen2.5-1.5b-instruct-q4'); // re-download if the source changed
 ```
+
+> `EdgeSLM` is an alias for `LocalAI` — `import { EdgeSLM } from 'react-native-edge-slm'` if you
+> prefer that name; the API is identical.
 
 ## Error handling
 
