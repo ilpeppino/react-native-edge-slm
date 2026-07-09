@@ -1,6 +1,6 @@
 {
   "name": "react-native-local-ai",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Generic on-device AI runtime for React Native: install, load, stream, benchmark and manage local GGUF models (Android-first, llama.cpp-first).",
   "keywords": [
     "react-native",

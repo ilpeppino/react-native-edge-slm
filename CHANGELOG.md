@@ -6,7 +6,9 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
-Initial development toward the first release. Android-first, llama.cpp-first.
+## [0.1.0] - 2026-07-09
+
+First public release. Android-first, llama.cpp-first.
 
 ### Added
 
@@ -36,4 +38,5 @@ Initial development toward the first release. Android-first, llama.cpp-first.
 - **Project infrastructure** — CI (leak-gate → typecheck → test → build), secret/private-asset
   leak gate, `CONTRIBUTING.md`, PR & issue templates, and a release/publish workflow.
 
-[Unreleased]: https://github.com/ilpeppino/react-native-local-ai/commits/main
+[Unreleased]: https://github.com/ilpeppino/react-native-local-ai/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ilpeppino/react-native-local-ai/releases/tag/v0.1.0
