@@ -1,12 +1,12 @@
 {
-  "name": "@react-native-local-ai/example",
+  "name": "@react-native-edge-slm/example",
   "version": "0.0.0",
   "private": true,
-  "description": "Example app driving the react-native-local-ai MVP (full RN app lands with the engine stage).",
+  "description": "Example app driving the react-native-edge-slm MVP (full RN app lands with the engine stage).",
   "dependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-local-ai": "*",
+    "react-native-edge-slm": "*",
     "llama.rn": "*"
   }
 }

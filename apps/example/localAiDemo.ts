@@ -1,5 +1,5 @@
 /**
- * End-to-end demo of the react-native-local-ai public API.
+ * End-to-end demo of the react-native-edge-slm public API.
  *
  * This is illustrative — the model URL is a placeholder you must replace with a source you
  * control. It exercises the full MVP call sequence and compiles against the package's types.
@@ -10,7 +10,7 @@ import {
   LocalAIError,
   ChecksumMismatchError,
   type DownloadProgress,
-} from 'react-native-local-ai';
+} from 'react-native-edge-slm';
 
 const PRESET_ID = 'qwen2.5-1.5b-instruct-q4';
 

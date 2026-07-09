@@ -16,7 +16,7 @@ code need to live in this OSS repo. This page describes the boundary.
 └─────────────────────────────────────┬───────────────────────────────────────────────┘
                                        │  runtime configuration only (never committed here)
                                        ▼
-                           react-native-local-ai (this OSS package)
+                           react-native-edge-slm (this OSS package)
                    presets · sources · download · registry · runtime · benchmark
 ```
 

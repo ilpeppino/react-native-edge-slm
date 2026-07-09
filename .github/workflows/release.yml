@@ -4,7 +4,7 @@ name: Release
 #
 # Setup required before first use:
 #   1. Add a repository secret `NPM_TOKEN` (an npm automation token with publish rights).
-#   2. Bump the version in packages/react-native-local-ai/package.json.
+#   2. Bump the version in packages/react-native-edge-slm/package.json.
 #   3. Tag and push: `git tag v0.1.0 && git push origin v0.1.0` (tag must match the package version).
 
 on:
@@ -43,16 +43,16 @@ jobs:
 
       - name: Verify tag matches package version
         run: |
-          PKG=$(node -p "require('./packages/react-native-local-ai/package.json').version")
+          PKG=$(node -p "require('./packages/react-native-edge-slm/package.json').version")
           TAG="${GITHUB_REF_NAME#v}"
           if [ "$PKG" != "$TAG" ]; then
             echo "::error::Tag v$TAG does not match package version $PKG"; exit 1
           fi
 
-      # Publishes packages/react-native-local-ai. Requires the NPM_TOKEN secret.
+      # Publishes packages/react-native-edge-slm. Requires the NPM_TOKEN secret.
       # Once this repo is public, append `--provenance` for a supply-chain attestation.
       - name: Publish to npm
-        run: npm publish --workspace packages/react-native-local-ai --access public
+        run: npm publish --workspace packages/react-native-edge-slm --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

@@ -1,4 +1,4 @@
-# react-native-local-ai
+# react-native-edge-slm
 
 Run local, on-device LLMs in React Native — install, load, stream, benchmark, and manage
 GGUF models with a small, well-typed API. Android-first, [llama.cpp](https://github.com/ggerganov/llama.cpp)-first.
@@ -9,7 +9,7 @@ GGUF models with a small, well-typed API. Android-first, [llama.cpp](https://git
 
 ## Why
 
-`react-native-local-ai` is the **model lifecycle & management layer** for on-device AI:
+`react-native-edge-slm` is the **model lifecycle & management layer** for on-device AI:
 
 - **Presets** — describe a model once (`registerPreset`), then install / load / benchmark it by id.
 - **Developer-provided sources** — you point the package at a model URL, a Hugging Face repo,
@@ -27,7 +27,7 @@ on everything *around* the engine that apps otherwise have to build themselves.
 ## Quick taste
 
 ```ts
-import { LocalAI } from 'react-native-local-ai';
+import { LocalAI } from 'react-native-edge-slm';
 
 LocalAI.registerPreset({
   id: 'qwen2.5-1.5b-instruct-q4',

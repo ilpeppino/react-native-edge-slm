@@ -1,10 +1,10 @@
 # Self-hosted llama.cpp backend — design & plan
 
 > **Status: scaffold.** The default `llama.cpp` runtime ships via the [`llama.rn`](https://github.com/mybigday/llama.rn)
-> dependency ([`LlamaRnBackend`](../packages/react-native-local-ai/src/runtime/backends/LlamaRnBackend.ts)).
+> dependency ([`LlamaRnBackend`](../packages/react-native-edge-slm/src/runtime/backends/LlamaRnBackend.ts)).
 > This document designs the **alternative** — vendoring llama.cpp directly behind the same
 > `RuntimeBackend` interface — and the scaffold that anchors it
-> ([`cpp/`](../packages/react-native-local-ai/cpp), [`NativeLlamaCppBackend`](../packages/react-native-local-ai/src/runtime/backends/NativeLlamaCppBackend.ts)).
+> ([`cpp/`](../packages/react-native-edge-slm/cpp), [`NativeLlamaCppBackend`](../packages/react-native-edge-slm/src/runtime/backends/NativeLlamaCppBackend.ts)).
 
 ## Why (and why not)
 
@@ -27,7 +27,7 @@ Nothing about the lifecycle changes. The backend is selected by a preset's `runt
 - self-hosted `llama.cpp-native` → `NativeLlamaCppBackend`
 
 ```ts
-import { LocalAI, NativeLlamaCppBackend } from 'react-native-local-ai';
+import { LocalAI, NativeLlamaCppBackend } from 'react-native-edge-slm';
 LocalAI.registerBackend(new NativeLlamaCppBackend());
 LocalAI.registerPreset({ id: 'm', runtime: 'llama.cpp-native', /* … */ });
 ```
@@ -38,7 +38,7 @@ are all reused unchanged. The native backend only has to satisfy `RuntimeBackend
 
 ## Native contract
 
-Outlined in [`cpp/rn_local_ai_llama.cpp`](../packages/react-native-local-ai/cpp/rn_local_ai_llama.cpp):
+Outlined in [`cpp/rn_local_ai_llama.cpp`](../packages/react-native-edge-slm/cpp/rn_local_ai_llama.cpp):
 
 | JS call | Native |
 |---|---|

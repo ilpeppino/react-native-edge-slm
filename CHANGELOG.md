@@ -38,5 +38,5 @@ First public release. Android-first, llama.cpp-first.
 - **Project infrastructure** — CI (leak-gate → typecheck → test → build), secret/private-asset
   leak gate, `CONTRIBUTING.md`, PR & issue templates, and a release/publish workflow.
 
-[Unreleased]: https://github.com/ilpeppino/react-native-local-ai/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/ilpeppino/react-native-local-ai/releases/tag/v0.1.0
+[Unreleased]: https://github.com/ilpeppino/react-native-edge-slm/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ilpeppino/react-native-edge-slm/releases/tag/v0.1.0

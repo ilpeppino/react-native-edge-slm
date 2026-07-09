@@ -1,5 +1,5 @@
 {
-  "name": "react-native-local-ai",
+  "name": "react-native-edge-slm",
   "version": "0.1.0",
   "description": "Generic on-device AI runtime for React Native: install, load, stream, benchmark and manage local GGUF models (Android-first, llama.cpp-first).",
   "keywords": [
@@ -14,10 +14,10 @@
   ],
   "license": "MIT",
   "author": "Giuseppe Tempone",
-  "homepage": "https://github.com/OWNER/react-native-local-ai#readme",
+  "homepage": "https://github.com/OWNER/react-native-edge-slm#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OWNER/react-native-local-ai.git"
+    "url": "https://github.com/OWNER/react-native-edge-slm.git"
   },
   "main": "lib/commonjs/index.js",
   "types": "lib/commonjs/index.d.ts",
@@ -29,7 +29,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-local-ai.podspec",
+    "react-native-edge-slm.podspec",
     "!**/__tests__",
     "!**/*.test.ts"
   ],

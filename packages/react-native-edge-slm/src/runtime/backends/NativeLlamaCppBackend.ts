@@ -12,7 +12,7 @@
  *
  * Usage once implemented:
  * ```ts
- * import { NativeLlamaCppBackend } from 'react-native-local-ai';
+ * import { NativeLlamaCppBackend } from 'react-native-edge-slm';
  * LocalAI.registerBackend(new NativeLlamaCppBackend());
  * // then register presets with `runtime: 'llama.cpp-native'`
  * ```
