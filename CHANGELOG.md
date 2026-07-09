@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-09
+
+Cross-platform parity milestone: iOS validated (builds in CI alongside Android; the same
+JavaScript runs on both), plus additive public API. No breaking changes.
+
 ### Added
 
 - **Streaming via async iteration** — `Runtime.generate()` now returns a `GenerationHandle` that
