@@ -1,11 +1,15 @@
 # react-native-edge-slm
 
+[![npm version](https://img.shields.io/npm/v/react-native-edge-slm.svg)](https://www.npmjs.com/package/react-native-edge-slm)
+[![CI](https://github.com/ilpeppino/react-native-edge-slm/actions/workflows/ci.yml/badge.svg)](https://github.com/ilpeppino/react-native-edge-slm/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/npm/l/react-native-edge-slm.svg)](./LICENSE)
+
 Run local, on-device LLMs in React Native — install, load, stream, benchmark, and manage
 GGUF models with a small, well-typed API. Android-first, [llama.cpp](https://github.com/ggerganov/llama.cpp)-first.
 
-> **Status:** early development. The public API (types + `RuntimeBackend` interface) is
-> defined; the download/registry lifecycle and native engine land in staged releases. See
-> [`docs/`](./docs) for the design.
+> **Status:** v0.1.0 — first public release. Full lifecycle + llama.cpp engine, with Android
+> (Kotlin) and iOS (Swift) native modules. The self-hosted `cpp/` backend is a scaffold (see
+> [`docs/cpp-backend.md`](./docs/cpp-backend.md)). See [`docs/`](./docs) for the full design.
 
 ## Why
 
