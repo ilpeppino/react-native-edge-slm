@@ -60,6 +60,42 @@ describe('BackendRuntime', () => {
     expect(streamed.length).toBeLessThan(8); // stopped early
   });
 
+  it('supports async iteration (for await) over streamed tokens', async () => {
+    const ctx = new FakeContext(['a', 'b', 'c'], 1);
+    const runtime = new BackendRuntime('m1', ctx);
+    const chunks: string[] = [];
+    for await (const token of runtime.generate({ prompt: 'hi' })) {
+      chunks.push(token.text);
+    }
+    expect(chunks).toEqual(['a', 'b', 'c']);
+  });
+
+  it('is awaitable and async-iterable for the same generation', async () => {
+    const ctx = new FakeContext(['x', 'y'], 1);
+    const runtime = new BackendRuntime('m1', ctx);
+    const handle = runtime.generate({ prompt: 'hi' });
+    const chunks: string[] = [];
+    for await (const token of handle) chunks.push(token.text);
+    const result = await handle; // same run, already settled
+    expect(chunks).toEqual(['x', 'y']);
+    expect(result.text).toBe('xy');
+  });
+
+  it('cancels the generation when the async iterator is broken out of early', async () => {
+    const ctx = new FakeContext(['a', 'b', 'c', 'd', 'e', 'f'], 5);
+    const runtime = new BackendRuntime('m1', ctx);
+    const chunks: string[] = [];
+    for await (const token of runtime.generate({ prompt: 'hi' })) {
+      chunks.push(token.text);
+      if (chunks.length === 2) break;
+    }
+    expect(chunks).toEqual(['a', 'b']);
+    // Breaking early cancels the run AND releases the busy-guard: a fresh generate is no longer
+    // rejected as busy. (FakeContext stays stopped after cancel, so we assert on the guard, not
+    // on token output.)
+    await expect(runtime.generate({ prompt: 'again' })).resolves.toBeDefined();
+  });
+
   it('rejects use after unload and is idempotent', async () => {
     const ctx = new FakeContext(['a'], 1);
     const runtime = new BackendRuntime('m1', ctx);

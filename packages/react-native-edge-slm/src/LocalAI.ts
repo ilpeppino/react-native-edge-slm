@@ -107,6 +107,12 @@ export class LocalAIFacade {
     return this.sources.get(presetId);
   }
 
+  /** Every installed model currently recorded in the registry (self-healed for missing files). */
+  async getInstalledModels(): Promise<InstalledModel[]> {
+    const registry = await this.getRegistry();
+    return registry.getAll();
+  }
+
   /** Current lifecycle state: in-flight status if downloading, else registry, else not-installed. */
   async getPresetStatus(presetId: string): Promise<PresetStatus> {
     this.requirePreset(presetId);
@@ -152,6 +158,31 @@ export class LocalAIFacade {
       this.activeStatus.set(presetId, { state: 'failed', error: localError });
       throw localError;
     }
+  }
+
+  /**
+   * (Re)install a model from its configured source to pick up a newer file.
+   *
+   * If the model is already installed and the configured source pins a `sha256` that matches the
+   * installed file's digest, this is a no-op and returns the current record. Otherwise it
+   * downloads + verifies + re-registers from the configured source (same path as
+   * {@link installPreset}), replacing the previous file.
+   */
+  async updatePreset(presetId: string, options: InstallOptions = {}): Promise<InstalledModel> {
+    this.requirePreset(presetId);
+    const source = this.requireSource(presetId);
+    const registry = await this.getRegistry();
+    const current = await registry.get(presetId);
+    if (
+      current &&
+      isRemoteSource(source) &&
+      source.sha256 &&
+      current.sha256 &&
+      source.sha256.toLowerCase() === current.sha256.toLowerCase()
+    ) {
+      return current;
+    }
+    return this.installPreset(presetId, options);
   }
 
   /** Remove an installed model, its registry record, and any partial download. */

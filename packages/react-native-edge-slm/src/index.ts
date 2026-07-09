@@ -6,6 +6,9 @@
  */
 
 export { LocalAI, LocalAIFacade } from './LocalAI';
+// `EdgeSLM` is a brand alias for the same singleton facade, so either name works:
+//   import { EdgeSLM } from 'react-native-edge-slm';
+export { LocalAI as EdgeSLM } from './LocalAI';
 export type { InstallOptions, BenchmarkOptions } from './LocalAI';
 
 export * from './types';
