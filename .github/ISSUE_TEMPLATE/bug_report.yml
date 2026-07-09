@@ -1,0 +1,79 @@
+name: Bug report
+description: Report a problem with react-native-local-ai
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug! Please do **not** include any proprietary data, secrets, private
+        model URLs, or personal information in this report.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, including what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps (and code, if possible) that reproduce the problem.
+      placeholder: |
+        1. registerPreset({ ... })
+        2. configurePresetSource(id, { type: 'url', url: '...' })
+        3. installPreset(id) → ...
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - Android
+        - iOS
+    validations:
+      required: true
+  - type: dropdown
+    id: source-type
+    attributes:
+      label: Model source type
+      options:
+        - url
+        - signed-url
+        - huggingface
+        - local-file
+        - app-bundle
+        - not applicable
+    validations:
+      required: false
+  - type: input
+    id: package-version
+    attributes:
+      label: react-native-local-ai version
+      placeholder: 0.0.1
+    validations:
+      required: true
+  - type: input
+    id: rn-version
+    attributes:
+      label: React Native version
+      placeholder: 0.76.x
+    validations:
+      required: true
+  - type: input
+    id: llama-rn-version
+    attributes:
+      label: llama.rn version (if using the default backend)
+      placeholder: 0.12.x
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / error output
+      description: Relevant logs, stack traces, or `LocalAIError` codes. Redact anything private.
+      render: shell
+    validations:
+      required: false

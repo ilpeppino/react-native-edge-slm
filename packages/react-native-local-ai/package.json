@@ -1,0 +1,65 @@
+{
+  "name": "react-native-local-ai",
+  "version": "0.0.1",
+  "description": "Generic on-device AI runtime for React Native: install, load, stream, benchmark and manage local GGUF models (Android-first, llama.cpp-first).",
+  "keywords": [
+    "react-native",
+    "llama.cpp",
+    "gguf",
+    "on-device",
+    "local-ai",
+    "llm",
+    "android",
+    "ios"
+  ],
+  "license": "MIT",
+  "author": "Giuseppe Tempone",
+  "homepage": "https://github.com/OWNER/react-native-local-ai#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OWNER/react-native-local-ai.git"
+  },
+  "main": "lib/commonjs/index.js",
+  "types": "lib/commonjs/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-local-ai.podspec",
+    "!**/__tests__",
+    "!**/*.test.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "llama.rn": ">=0.12.0"
+  },
+  "peerDependenciesMeta": {
+    "llama.rn": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.0",
+    "@types/react": "^18.2.0",
+    "jest": "^29.7.0",
+    "llama.rn": "^0.12.0",
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "ts-jest": "^29.1.5",
+    "typescript": "^5.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@react-native-local-ai/example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Example app driving the react-native-local-ai MVP (full RN app lands with the engine stage).",
+  "dependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-local-ai": "*",
+    "llama.rn": "*"
+  }
+}

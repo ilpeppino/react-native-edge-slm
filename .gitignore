@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.yarn/
+
+# Build output
+lib/
+dist/
+build/
+*.tsbuildinfo
+
+# Native build artifacts
+android/.gradle/
+android/build/
+android/app/build/
+android/.cxx/
+**/*.so
+ios/Pods/
+ios/build/
+*.xcworkspace/xcuserdata/
+DerivedData/
+
+# Model files — this package never ships model binaries
+*.gguf
+*.bin
+*.task
+
+# Environment / secrets — never commit these into the OSS repo
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs & OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/*
+!.vscode/extensions.json

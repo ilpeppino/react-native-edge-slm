@@ -1,0 +1,20 @@
+{
+  "name": "react-native-local-ai-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Monorepo for react-native-local-ai — a generic on-device AI runtime for React Native.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace packages/react-native-local-ai",
+    "typecheck": "npm run typecheck --workspace packages/react-native-local-ai",
+    "lint:no-private-assets": "bash scripts/check-no-private-assets.sh",
+    "test": "npm run test --workspace packages/react-native-local-ai --if-present"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

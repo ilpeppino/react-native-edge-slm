@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # --ignore-scripts skips llama.rn's native-artifact download: it is not needed for
+      # typecheck/test/build and would slow CI. The package never bundles model or engine binaries.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      # Fail fast: keep proprietary identifiers out of the public tree.
+      - name: Private-asset leak gate
+        run: npm run lint:no-private-assets
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build

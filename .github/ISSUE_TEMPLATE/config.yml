@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/ilpeppino/react-native-local-ai/tree/main/docs
+    about: Getting started, model sources, presets, runtimes, Android, iOS, and security.
+  - name: Questions & discussion
+    url: https://github.com/ilpeppino/react-native-local-ai/discussions
+    about: Ask usage questions or discuss ideas here rather than opening an issue.
