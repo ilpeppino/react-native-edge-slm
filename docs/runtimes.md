@@ -23,6 +23,24 @@ await runtime.unload();              // free memory
 `GenerationBusyError`). `cancel()` maps to the engine's stop and marks the (possibly truncated)
 result `cancelled`.
 
+### Platform differences the backend absorbs
+
+The public `Runtime` behaves identically on Android and iOS. Where the underlying `llama.rn` /
+llama.cpp layer differs by platform or architecture, the `LlamaRnBackend` adapter normalizes it —
+app code never sees the difference:
+
+| Concern | Android (bridge) | iOS (JSI / new arch) | How the adapter normalizes |
+| --- | --- | --- | --- |
+| `stopCompletion()` return | `Promise<void>` | `undefined` (synchronous) — despite the `Promise<void>` type | `cancel()` wraps it in `Promise.resolve(...)` inside a `try/catch`, so `Runtime.cancel()` is always safe and non-throwing. |
+| EOS / end-of-turn | identical (shared C++: `llama_vocab_is_eog`) | identical | No divergence — generation stops on the model's EOS on **both** platforms, provided the prompt uses the model's **chat template** (a raw prompt has no end-of-turn token, so the model runs to the `maxTokens` cap). |
+| Cancel semantics | interrupts the blocking decode | interrupts the blocking decode | `BackendRuntime` marks the in-flight result `cancelled` / `finishReason: 'cancelled'` regardless of platform. |
+
+> **Cancel crash (fixed):** earlier code called `this.context.stopCompletion().catch(...)`
+> directly. On iOS `stopCompletion()` returns `undefined`, so `.catch` threw
+> *"Cannot read property 'catch' of undefined"* and crashed the app on Cancel. The adapter now
+> normalizes the return value; see `LlamaRnBackend.cancel()` and its regression tests
+> (`__tests__/llamaRnBackend.test.ts`).
+
 ## Registering a custom backend
 
 Implement `RuntimeBackend` and register it. A preset whose `runtime` matches the backend's `key`

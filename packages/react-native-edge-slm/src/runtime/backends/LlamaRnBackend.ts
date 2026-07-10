@@ -105,7 +105,19 @@ class LlamaRnContext implements RuntimeBackendContext {
 
   cancel(): void {
     // Fire-and-forget: stopCompletion resolves the in-flight completion() promise.
-    void this.context.stopCompletion().catch(() => undefined);
+    //
+    // `stopCompletion()` is platform-inconsistent in llama.rn: on the JSI/new-arch path (iOS) the
+    // native host function returns `undefined` synchronously, while the bridge path returns a real
+    // `Promise<void>` — even though the type says `Promise<void>` everywhere. Calling `.catch()`
+    // on the iOS return value crashed with "Cannot read property 'catch' of undefined". Normalize
+    // both shapes with `Promise.resolve(...)`, and guard the call itself so a synchronous throw
+    // (e.g. the context was already released) can never surface to the caller. Cancellation is
+    // best-effort by contract, so swallowing here is correct.
+    try {
+      void Promise.resolve(this.context.stopCompletion()).catch(() => undefined);
+    } catch {
+      // stopCompletion threw synchronously — nothing to interrupt, or already stopped.
+    }
   }
 
   async unload(): Promise<void> {
